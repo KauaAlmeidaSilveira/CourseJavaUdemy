@@ -1,15 +1,13 @@
 package JDBC.source;
 
 import JDBC.db.DB;
-import JDBC.db.DbException;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Program {
+public class RecuperandoDados {
     public static void main(String[] args) {
 
         Connection conn = null;
