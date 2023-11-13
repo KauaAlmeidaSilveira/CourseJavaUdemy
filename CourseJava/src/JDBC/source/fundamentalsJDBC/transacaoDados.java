@@ -1,4 +1,4 @@
-package JDBC.source.operations;
+package JDBC.source.fundamentalsJDBC;
 
 import JDBC.db.DB;
 import JDBC.db.DbException;
