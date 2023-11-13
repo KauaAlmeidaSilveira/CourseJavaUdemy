@@ -1,32 +1,31 @@
-package JDBC.source;
+package JDBC.source.operations;
 
 import JDBC.db.DB;
+import JDBC.db.DbIntregityException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class AtualizandoDados {
+public class DeletandoDados {
     public static void main(String[] args) {
+
         Connection conn = null;
         PreparedStatement st = null;
 
-        try {
+        try{
             conn = DB.getConnection();
-            st = conn.prepareStatement(
-                    "UPDATE seller " +
-                        "SET BaseSalary = BaseSalary + ? " +
-                        "WHERE DepartmentId = ?");
 
-            st.setDouble(1, 3000.0);
-            st.setInt(2, 2);
+            st = conn.prepareStatement(
+                    "DELETE FROM department WHERE Id = ?");
+
+            st.setInt(1, 6);
 
             int rowsAffected = st.executeUpdate();
 
-            System.out.println("Done! Rows Affected: " + rowsAffected);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Done! Rows Affected = " + rowsAffected);
+        }catch (SQLException e){
+            throw new DbIntregityException(e.getMessage());
         }finally {
             DB.closeStatement(st);
             DB.closeConnection();
