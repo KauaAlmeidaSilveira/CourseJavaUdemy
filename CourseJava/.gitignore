@@ -5,3 +5,5 @@ bin/
 .idea/
 .metadata
 CourseJava.iml
+/out
+out/
