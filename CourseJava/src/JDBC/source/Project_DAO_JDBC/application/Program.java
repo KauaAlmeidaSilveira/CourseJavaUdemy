@@ -21,6 +21,10 @@ public class Program {
         List<Seller> sellerList = sellerDao.findByDepartment(dep.getId());
         sellerList.forEach(System.out::println);
 
+        System.out.println("=== TEST 3: seller findAll ===");
+        sellerList = sellerDao.findAll();
+        sellerList.forEach(System.out::println);
+
 
     }
 }
