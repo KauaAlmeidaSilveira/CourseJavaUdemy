@@ -22,17 +22,89 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public void insert(Seller obj) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
 
+        try{
+            st = conn.prepareStatement(
+                    "INSERT INTO seller" +
+                            "(Name, Email, BirthDate, BaseSalary, DepartmentId)" +
+                            "VALUES (?, ?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS);
+
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getEmail());
+            st.setDate(3, Date.valueOf(obj.getBirthDate()));
+            st.setDouble(4, obj.getBaseSalary());
+            st.setInt(5, obj.getDepartment().getId());
+
+            int rowsAffected = st.executeUpdate();
+
+            if(rowsAffected > 0){
+                rs = st.getGeneratedKeys();
+                if (rs.next()){
+                    int id = rs.getInt(1);
+                    obj.setId(id);
+                    System.out.println("Done ! Id: " + id);
+                }
+            }else {
+                throw new DbException("No rows affected!");
+            }
+
+        }catch (SQLException e){
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
     }
 
     @Override
     public void update(Seller obj) {
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement("UPDATE seller " +
+                    "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? " +
+                    "WHERE Id = ?");
 
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getEmail());
+            st.setDate(3, Date.valueOf(obj.getBirthDate()));
+            st.setDouble(4, obj.getBaseSalary());
+            st.setInt(5, obj.getDepartment().getId());
+            st.setInt(6, obj.getId());
+
+            st.executeUpdate();
+
+        }catch (SQLException e){
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
     public void deleteById(Integer id) {
+        PreparedStatement st = null;
 
+        try {
+
+            st = conn.prepareStatement("DELETE FROM seller " +
+                    "WHERE Id = ?");
+
+            st.setInt(1, id);
+
+            int rows = st.executeUpdate();
+
+            if(rows == 0){
+                throw new DbException("Seller not found!!");
+            }
+
+        }catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
@@ -101,6 +173,9 @@ public class SellerDaoJDBC implements SellerDao {
 
         }catch (SQLException e){
             throw new DbException(e.getMessage());
+        }finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
         }
     }
 
@@ -142,6 +217,9 @@ public class SellerDaoJDBC implements SellerDao {
 
         }catch (SQLException e){
             throw new DbException(e.getMessage());
+        }finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
         }
     }
 
