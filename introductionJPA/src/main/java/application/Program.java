@@ -17,17 +17,17 @@ public class Program {
 
         EntityManager em = emf.createEntityManager();
 
-        /*
-            === INSERINDO DADOS NO BD ===
+
+            //=== INSERINDO DADOS NO BD ===
 
             em.getTransaction().begin();
 
-            em.persist(p1);
+            //em.persist(p1);
             em.persist(p2);
-            em.persist(p3);
+            //em.persist(p3);
 
             em.getTransaction().commit();
-        */
+
 
         /*
             === BUSCANDO DADO ===
@@ -37,10 +37,11 @@ public class Program {
             System.out.println(p);
         */
 
+
         /*
             === DELETANDO DADO ===
 
-            Pessoa p = em.find(Pessoa.class, 7);
+            Pessoa p = em.find(Pessoa.class, 2);
 
             em.getTransaction().begin();
 
@@ -48,6 +49,7 @@ public class Program {
 
             em.getTransaction().commit();
         */
+
 
         emf.close();
         em.close();
