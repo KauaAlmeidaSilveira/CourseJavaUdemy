@@ -1,5 +1,6 @@
 package com.coursejava.apiRestNoSQL.config;
 
+import com.coursejava.apiRestNoSQL.dto.AuthorDTO;
 import com.coursejava.apiRestNoSQL.entities.Post;
 import com.coursejava.apiRestNoSQL.entities.User;
 import com.coursejava.apiRestNoSQL.repository.PostRepository;
@@ -35,12 +36,14 @@ public class Instatiation implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
-        Post post1 = new Post(null, sdf.parse("21/03/2023"), "Partiu viagem !!", "Vou viajar para SP, abraços", maria);
-        Post post2 = new Post(null, sdf.parse("23/03/2023"), "Bom dia !!", "Acordei feliz hoje", maria);
+        userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
+        Post post1 = new Post(null, sdf.parse("21/03/2023"), "Partiu viagem !!", "Vou viajar para SP, abraços", new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("23/03/2023"), "Bom dia !!", "Acordei feliz hoje", new AuthorDTO(maria));
 
         postRepository.saveAll(Arrays.asList(post1, post2));
 
-        userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
 
     }
 }
