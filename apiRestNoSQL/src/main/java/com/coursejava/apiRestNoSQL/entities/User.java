@@ -1,17 +1,16 @@
 package com.coursejava.apiRestNoSQL.entities;
 
 import jakarta.persistence.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 
-@Entity
-@Table(name = "tb_user")
+@Document
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
     private String email;
