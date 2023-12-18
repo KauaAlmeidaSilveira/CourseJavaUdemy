@@ -1,5 +1,6 @@
 package com.coursejava.apiRestNoSQL.controllers;
 
+import com.coursejava.apiRestNoSQL.dto.UserDTO;
 import com.coursejava.apiRestNoSQL.entities.User;
 import com.coursejava.apiRestNoSQL.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,10 @@ public class UserResource {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<UserDTO>> findAll() {
         List<User> users = userService.findAll();
-        return ResponseEntity.status(200).body(users);
+        List<UserDTO> usersDTO = users.stream().map(UserDTO::new).toList();
+        return ResponseEntity.status(200).body(usersDTO);
     }
 
 }
