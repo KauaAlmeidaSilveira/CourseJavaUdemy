@@ -1,6 +1,7 @@
 package com.coursejava.apiRestNoSQL.config;
 
 import com.coursejava.apiRestNoSQL.dto.AuthorDTO;
+import com.coursejava.apiRestNoSQL.dto.CommentDTO;
 import com.coursejava.apiRestNoSQL.entities.Post;
 import com.coursejava.apiRestNoSQL.entities.User;
 import com.coursejava.apiRestNoSQL.repository.PostRepository;
@@ -11,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.TimeZone;
 
 @Configuration
@@ -41,11 +41,17 @@ public class Instatiation implements CommandLineRunner {
         Post post1 = new Post(null, sdf.parse("21/03/2023"), "Partiu viagem !!", "Vou viajar para SP, abraços", new AuthorDTO(maria));
         Post post2 = new Post(null, sdf.parse("23/03/2023"), "Bom dia !!", "Acordei feliz hoje", new AuthorDTO(maria));
 
+        CommentDTO commentDTO1 = new CommentDTO("Boa viagem mano!", sdf.parse("21/03/2023"), new AuthorDTO(alex));
+        CommentDTO commentDTO2 = new CommentDTO("Aproveite!", sdf.parse("22/03/2023"), new AuthorDTO(bob));
+        CommentDTO commentDTO3 = new CommentDTO("Tenha um ótimo dia!", sdf.parse("23/03/2023"), new AuthorDTO(alex));
+
+        post1.getComments().addAll(Arrays.asList(commentDTO1, commentDTO2));
+        post2.getComments().add(commentDTO3);
+
         postRepository.saveAll(Arrays.asList(post1, post2));
 
         maria.getPosts().addAll(Arrays.asList(post1, post2));
 
-         userRepository.save(maria);
-
+        userRepository.save(maria);
     }
 }
