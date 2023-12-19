@@ -23,7 +23,13 @@ public class PostService {
         return post.get();
     }
 
+    //Using query method
     public List<Post> findByTitle(String text){
         return postRepository.findByTitleContainingIgnoreCase(text);
+    }
+
+    //Using @Query
+    public List<Post> searchTitle(String text){
+        return postRepository.searchTitle(text);
     }
 }
