@@ -1,6 +1,7 @@
 package com.coursejava.apiRestNoSQL.controllers;
 
 import com.coursejava.apiRestNoSQL.dto.UserDTO;
+import com.coursejava.apiRestNoSQL.entities.Post;
 import com.coursejava.apiRestNoSQL.entities.User;
 import com.coursejava.apiRestNoSQL.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -56,5 +56,10 @@ public class UserResource {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts (@PathVariable String id){
+        List<Post> listPosts = userService.findPosts(id);
+        return ResponseEntity.ok().body(listPosts);
+    }
 
 }

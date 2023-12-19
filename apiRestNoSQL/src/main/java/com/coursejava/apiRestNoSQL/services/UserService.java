@@ -1,6 +1,7 @@
 package com.coursejava.apiRestNoSQL.services;
 
 import com.coursejava.apiRestNoSQL.dto.UserDTO;
+import com.coursejava.apiRestNoSQL.entities.Post;
 import com.coursejava.apiRestNoSQL.entities.User;
 import com.coursejava.apiRestNoSQL.repository.UserRepository;
 import com.coursejava.apiRestNoSQL.services.exceptions.ObjectNotFoundException;
@@ -46,6 +47,11 @@ public class UserService {
     public void updateData(User oldUser, User newUser){
         oldUser.setName(newUser.getName());
         oldUser.setEmail(newUser.getEmail());
+    }
+
+    public List<Post> findPosts(String idUser){
+        User user = findById(idUser);
+        return user.getPosts();
     }
 
     public User fromDTO(UserDTO userDTO){
